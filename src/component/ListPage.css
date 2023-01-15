@@ -1,0 +1,37 @@
+.formBox {
+    display: grid;
+    width: 100%;
+    justify-items: center;
+    height: 100px;
+    align-items: center;
+    border-bottom: 1px solid #666666;
+}
+
+.formBox > div input {
+    padding: 5px;
+}
+
+.formBox > div input[type=text]{
+    margin-right: 5px;
+    height: 33px;
+}
+
+.itemBox{
+    display: flex;
+    justify-content: center;
+    padding: 5px 0;
+}
+
+.itemBox > .record_text{
+    width: 150px;
+
+}
+
+.toHome {
+    margin-top: 20px;
+}
+
+.btnBox {
+    display: flex;
+    justify-content: center;
+}
