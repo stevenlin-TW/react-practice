@@ -7,10 +7,12 @@ module.exports = {
     // 輸出
     output : {
         filename : "main.js",
-        path : path.resolve(__dirname, "dist")
+        path : path.resolve(__dirname, "dist"),
+        publicPath: '/'
     },
     devServer : {
-        static : "./dist"
+        static : "./dist",
+        historyApiFallback : true
     },
     // 模組載入規則
     module : {

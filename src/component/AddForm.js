@@ -1,24 +1,34 @@
-import React, { useState } from 'react';
-import {v4 as uuidv4} from 'uuid';
+import React, { useState, useRef } from 'react';
+import { collection, addDoc} from 'firebase/firestore'
+import { db } from '../firebase';
 
 function AddForm(props){
     const [input, setInput] = useState('');
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if(input == ''){return;}
-        props.addRecord({value: input, id: uuidv4()});
-        setInput('');
         
+        try{
+            const docRef = await addDoc(collection(db, 'list'), {'todo' : input});
+            console.log(docRef.id);
+            props.addRecord({todo: input, id: docRef.id})
+        } catch (e) {
+            console.error(e);
+        }
+        inputRef.current.value = '';
     }
 
     const handleChange = (e) => {
         setInput(e.target.value);
     }
+
+    const inputRef = useRef();
+
     return (
         <>
             <form className='formBox' onSubmit={handleSubmit}>
                 <div>
-                    <input id='add' type='text' placeholder='測試紀錄' value={input} onChange={handleChange}/><input type='submit' value='新增紀錄'/>
+                    <input ref={inputRef} id='add' type='text' placeholder='測試紀錄' value={input} onChange={handleChange}/><input type='submit' value='新增紀錄'/>
                 </div>
             </form>
         </>
