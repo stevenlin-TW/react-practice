@@ -1,4 +1,4 @@
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDocs } from 'firebase/firestore';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AddForm from './AddForm';
@@ -15,14 +15,16 @@ function ListPage(){
         setRecordList(records);
     }
 
-    const removeRecord = (id) => {
+    const removeRecord = async (id) => {
+        const docRef = doc(db, 'list', id)
+        await deleteDoc(docRef);
         let updateRecordList = [...recordList].filter(record => record.id !== id);
         setRecordList(updateRecordList);
     }
 
     const getRecord = async () => {
         await getDocs(collection(db, 'list')).then((snapshot) => {
-            console.log(snapshot.docs);
+            //console.log(snapshot.docs[0].data()); => {todo: '1234'}
             const db_record = snapshot.docs.map((doc) => ({...doc.data(), id: doc.id}));
             setRecordList(db_record);
         })
